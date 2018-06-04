@@ -1,5 +1,5 @@
 .#{$clm-prefix}field {
-  @extend .#{$sm-prefix}field
+  @extend .#{$sm-prefix}field;
 }
 
 .#{$clm-prefix}select {
@@ -9,7 +9,7 @@
 .#{$clm-prefix}tags {
   @extend .#{$sm-prefix}sector;
 
-  font-size: $fontSizeS;
+  font-size: 11px;
   padding: 10px 5px;
 
   ##{$clm-prefix}label,
@@ -48,7 +48,7 @@
   }
 
   ##{$clm-prefix}new {
-    @extend  .#{$app-prefix}invis-invis;
+    @extend .#{$app-prefix}invis-invis;
 
     color: $fontColor;
     padding: $paddElClm;
@@ -61,16 +61,17 @@
     margin: 0 3px 3px 0;
     padding: 5px;
     cursor: default;
+    color: #000;
   }
 
   ##{$clm-prefix}close {
-    @extend  .opac50;
+    @extend .opac50;
 
     font-size: 20px;
     line-height: 0;
     cursor: pointer;
-    color: rgba(255, 255, 255, 0.9);
-    @extend  .no-select;
+    color: rgba(0, 0, 0, 0.9);
+    @extend .no-select;
 
     &:hover {
       @include opacity(0.7);
@@ -78,7 +79,7 @@
   }
 
   ##{$clm-prefix}checkbox {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(0, 0, 0, 0.9);
     vertical-align: middle;
     cursor: pointer;
     font-size: 9px;

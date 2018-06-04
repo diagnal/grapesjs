@@ -20,7 +20,7 @@
   font-weight: lighter;
 
   &s {
-    font-size: $fontSizeS;
+    font-size: 13px;
   }
 
   .#{$app-prefix}label {
@@ -28,6 +28,7 @@
     text-align: left;
     text-overflow: ellipsis;
     overflow: hidden;
+    line-height: 28px;
   }
 
   .#{$app-prefix}field {

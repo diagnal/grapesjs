@@ -38,6 +38,19 @@ module.exports = Backbone.View.extend({
     if (target && target.set) {
       target.set('attributes', _.clone(target.get('attributes')));
       target.set('src', this.model.get('src'));
+      var parent = target.parent();
+      if (
+        parent &&
+        parent.attributes &&
+        parent.attributes.type == 'link' &&
+        this.model.attributes.links
+      ) {
+        var link =
+          this.model.attributes.links.web ||
+          this.model.attributes.links.mobile ||
+          '#';
+        parent.setAttributes({ href: link });
+      }
     }
   },
 

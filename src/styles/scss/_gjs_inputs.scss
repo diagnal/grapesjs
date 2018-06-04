@@ -90,7 +90,7 @@
 }
 
 .#{$app-prefix}field {
-  background-color: rgba(0, 0, 0, 0.2);
+  //   background-color: rgba(0, 0, 0, 0.2);
   border: none;
   box-shadow: none;
   border-radius: 2px;
@@ -289,31 +289,31 @@
     }
 
     &::-webkit-slider-thumb {
-     -webkit-appearance: none;
-     margin-top: -4px;
+      -webkit-appearance: none;
+      margin-top: -4px;
 
-     @include rangeThumbStyle();
+      @include rangeThumbStyle();
     }
 
     &::-moz-range-thumb {
-     @include rangeThumbStyle();
+      @include rangeThumbStyle();
     }
 
     &::-ms-thumb {
-     @include rangeThumbStyle();
+      @include rangeThumbStyle();
     }
 
     /* -moz-range-progress */
     &::-moz-range-track {
-     @include rangeTrackStyle();
+      @include rangeTrackStyle();
     }
 
     &::-webkit-slider-runnable-track {
-     @include rangeTrackStyle();
+      @include rangeTrackStyle();
     }
 
     &::-ms-track {
-     @include rangeTrackStyle();
+      @include rangeTrackStyle();
     }
   }
 }
