@@ -1,4 +1,3 @@
-
 .#{$sm-prefix} {
   &clear {
     line-height: 0;
@@ -11,7 +10,7 @@
   }
 
   &properties {
-    font-size: $fontSizeS;
+    font-size: 11px;
     padding: 10px 5px;
     display: flex;
     flex-wrap: wrap;
@@ -265,7 +264,8 @@
     .#{$sm-prefix}btn {
       background-color: lighten($mainDkColor, 13%);
       border-radius: 2px;
-      box-shadow: 1px 1px 0 lighten($mainDkColor, 2%), 1px 1px 0 lighten($mainDkColor, 17%) inset;
+      box-shadow: 1px 1px 0 lighten($mainDkColor, 2%),
+        1px 1px 0 lighten($mainDkColor, 17%) inset;
       padding: 5px;
       position: relative;
       text-align: center;

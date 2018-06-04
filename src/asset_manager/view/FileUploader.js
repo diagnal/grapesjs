@@ -3,11 +3,12 @@ import fetch from 'utils/fetch';
 module.exports = Backbone.View.extend(
   {
     template: _.template(`
-  <form>
-    <div id="<%= pfx %>title"><%= title %></div>
-    <input type="file" id="<%= uploadId %>" name="file" accept="*/*" <%= disabled ? 'disabled' : '' %> multiple/>
-    <div style="clear:both;"></div>
-  </form>
+    <form>
+        <div id="<%= pfx %>title">Image Preview</div>
+        <img style="max-width: 450px; max-height: 250px;min-height: 250px;" id="mediaPreview" /> 
+        <div style="clear:both;"></div>
+    </form>
+    <div id="imgMeta" style="position: absolute;bottom: 0;padding: 5px;"></div>
   `),
 
     events: {},

@@ -14,12 +14,15 @@ module.exports = Backbone.View.extend({
     <div class="${pfx}assets-cont">
       <div class="${pfx}assets-header">
         <form class="${pfx}add-asset">
-          <div class="${ppfx}field ${pfx}add-field">
-            <input placeholder="${view.config.inputPlaceholder}"/>
-          </div>
-          <button class="${ppfx}btn-prim">${view.config.addBtnText}</button>
-          <div style="clear:both"></div>
+            <div class="${ppfx}field ${pfx}add-field">
+                <input style="width: 100%; overflow:visible !important;" id="mediaSelector" placeholder="Paste URL / Search"/>
+            </div>
+            <div style="clear:both"></div>
         </form>
+        <div class="${ppfx}dips" style="display:none">
+            <button class="fa fa-th ${this.ppfx}btnt"></button>
+            <button class="fa fa-th-list ${this.ppfx}btnt"></button>
+        </div>
       </div>
       <div class="${pfx}assets" data-el="assets"></div>
       <div style="clear:both"></div>

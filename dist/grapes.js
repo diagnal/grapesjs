@@ -21578,7 +21578,7 @@ module.exports = __webpack_require__(44).extend({
   getPreview: function getPreview() {
     var pfx = this.pfx;
     var src = this.model.get('src');
-    return '\n      <div class="' + pfx + 'preview" style="background-image: url(\'' + src + '\');"></div>\n      <div class="' + pfx + 'preview-bg ' + this.ppfx + 'checker-bg"></div>\n    ';
+    return '\n        <div id="' + pfx + 'preview" class="' + pfx + 'preview" style="background-image: url(' + src + ');"></div>\n        <div id="' + pfx + 'preview-bg" class="' + pfx + 'preview-bg ' + this.ppfx + 'checker-bg"></div>\n    ';
   },
   getInfo: function getInfo() {
     var pfx = this.pfx;
@@ -21589,7 +21589,7 @@ module.exports = __webpack_require__(44).extend({
     var unit = model.get('unitDim');
     var dim = width && height ? width + 'x' + height + unit : '';
     name = name || model.getFilename();
-    return '\n      <div class="' + pfx + 'name">' + name + '</div>\n      <div class="' + pfx + 'dimensions">' + dim + '</div>\n    ';
+    return '\n        <div id="' + pfx + 'name" class="' + pfx + 'name">' + name + '</div>\n        <div id="' + pfx + 'dimensions" class="' + pfx + 'dimensions">' + dim + '</div>\n    ';
   },
   init: function init(o) {
     var pfx = this.pfx;
@@ -21602,15 +21602,24 @@ module.exports = __webpack_require__(44).extend({
    * @private
    * */
   onClick: function onClick() {
-    var onClick = this.config.onClick;
     var model = this.model;
+    //Show image in preview on click
+    $('#mediaPreview').attr('src', model.get('src'));
+    $('#' + this.pfx + 'title').css('display', 'none');
+    //Show image dimensions
+    var img = new Image();
+    img.onload = function () {
+      $('#imgMeta').html('Height: <b>' + img.height + 'px</b> Width: <b>' + img.width + 'px</b>');
+    };
+    img.src = model.get('src');
+    var onClick = this.config.onClick;
     this.collection.trigger('deselectAll');
     this.$el.addClass(this.pfx + 'highlight');
 
     if (typeof onClick === 'function') {
       onClick(model);
     } else {
-      this.updateTarget(this.collection.target);
+      this.updateTarget(model.get('src'));
     }
   },
 
@@ -21687,6 +21696,11 @@ module.exports = Backbone.View.extend({
     if (target && target.set) {
       target.set('attributes', _.clone(target.get('attributes')));
       target.set('src', this.model.get('src'));
+      var parent = target.parent();
+      if (parent && parent.attributes && parent.attributes.type == 'link' && this.model.attributes.links) {
+        var link = this.model.attributes.links.web || this.model.attributes.links.mobile || '#';
+        parent.setAttributes({ href: link });
+      }
     }
   },
   getPreview: function getPreview() {
@@ -21718,7 +21732,7 @@ var _fetch2 = _interopRequireDefault(_fetch);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = Backbone.View.extend({
-  template: _.template('\n  <form>\n    <div id="<%= pfx %>title"><%= title %></div>\n    <input type="file" id="<%= uploadId %>" name="file" accept="*/*" <%= disabled ? \'disabled\' : \'\' %> multiple/>\n    <div style="clear:both;"></div>\n  </form>\n  '),
+  template: _.template('\n    <form>\n        <div id="<%= pfx %>title">Image Preview</div>\n        <img style="max-width: 450px; max-height: 250px;min-height: 250px;" id="mediaPreview" /> \n        <div style="clear:both;"></div>\n    </form>\n    <div id="imgMeta" style="position: absolute;bottom: 0;padding: 5px;"></div>\n  '),
 
   events: {},
 
@@ -23798,7 +23812,7 @@ module.exports = function () {
     plugins: plugins,
 
     // Will be replaced on build
-    version: '0.14.20',
+    version: '0.14.46',
 
     /**
      * Initializes an editor based on passed options
@@ -35809,74 +35823,74 @@ module.exports = function () {
 "use strict";
 
 
-var crc = "create-comp";
-var mvc = "move-comp";
-var swv = "sw-visibility";
-var expt = "export-template";
-var osm = "open-sm";
-var otm = "open-tm";
-var ola = "open-layers";
-var obl = "open-blocks";
-var ful = "fullscreen";
-var prv = "preview";
+var crc = 'create-comp';
+var mvc = 'move-comp';
+var swv = 'sw-visibility';
+var expt = 'export-template';
+var osm = 'open-sm';
+var otm = 'open-tm';
+var ola = 'open-layers';
+var obl = 'open-blocks';
+var ful = 'fullscreen';
+var prv = 'preview';
 
 module.exports = {
-  stylePrefix: "pn-",
+  stylePrefix: 'pn-',
 
   // Default panels fa-sliders for features
   defaults: [{
-    id: "commands",
+    id: 'commands',
     buttons: [{}]
   }, {
-    id: "options",
+    id: 'options',
     buttons: [{
       active: true,
       id: swv,
-      className: "fa fa-square-o",
+      className: 'fa fa-square-o',
       command: swv,
       context: swv,
-      attributes: { title: "View components" }
+      attributes: { title: 'View components' }
     }, {
       id: prv,
-      className: "fa fa-eye",
+      className: 'fa fa-eye',
       command: prv,
       context: prv,
-      attributes: { title: "Preview" }
+      attributes: { title: 'Preview' }
     }, {
       id: ful,
-      className: "fa fa-arrows-alt",
+      className: 'fa fa-arrows-alt',
       command: ful,
       context: ful,
-      attributes: { title: "Fullscreen" }
+      attributes: { title: 'Fullscreen' }
     }, {
       id: expt,
-      className: "fa fa-code",
+      className: 'fa fa-code',
       command: expt,
-      attributes: { title: "View code" }
+      attributes: { title: 'View code' }
     }]
   }, {
-    id: "views",
+    id: 'views',
     buttons: [{
       id: osm,
-      className: "fa fa-paint-brush",
+      className: 'fa fa-paint-brush',
       command: osm,
       active: true,
-      attributes: { title: "Open Style Manager" }
+      attributes: { title: 'Open Style Manager' }
     }, {
       id: otm,
-      className: "fa fa-cog",
+      className: 'fa fa-cog',
       command: otm,
-      attributes: { title: "Settings" }
+      attributes: { title: 'Settings' }
     }, {
       id: ola,
-      className: "fa fa-bars",
+      className: 'fa fa-bars',
       command: ola,
-      attributes: { title: "Open Layer Manager" }
+      attributes: { title: 'Open Layer Manager' }
     }, {
       id: obl,
-      className: "fa fa-th-large",
+      className: 'fa fa-th-large',
       command: obl,
-      attributes: { title: "Open Blocks" }
+      attributes: { title: 'Open Blocks' }
     }]
   }],
 
@@ -41219,7 +41233,7 @@ module.exports = Backbone.View.extend({
   template: function template(view) {
     var pfx = view.pfx;
     var ppfx = view.ppfx;
-    return '\n    <div class="' + pfx + 'assets-cont">\n      <div class="' + pfx + 'assets-header">\n        <form class="' + pfx + 'add-asset">\n          <div class="' + ppfx + 'field ' + pfx + 'add-field">\n            <input placeholder="' + view.config.inputPlaceholder + '"/>\n          </div>\n          <button class="' + ppfx + 'btn-prim">' + view.config.addBtnText + '</button>\n          <div style="clear:both"></div>\n        </form>\n      </div>\n      <div class="' + pfx + 'assets" data-el="assets"></div>\n      <div style="clear:both"></div>\n    </div>\n    ';
+    return '\n    <div class="' + pfx + 'assets-cont">\n      <div class="' + pfx + 'assets-header">\n        <form class="' + pfx + 'add-asset">\n            <div class="' + ppfx + 'field ' + pfx + 'add-field">\n                <input style="width: 100%; overflow:visible !important;" id="mediaSelector" placeholder="Paste URL / Search"/>\n            </div>\n            <div style="clear:both"></div>\n        </form>\n        <div class="' + ppfx + 'dips" style="display:none">\n            <button class="fa fa-th ' + this.ppfx + 'btnt"></button>\n            <button class="fa fa-th-list ' + this.ppfx + 'btnt"></button>\n        </div>\n      </div>\n      <div class="' + pfx + 'assets" data-el="assets"></div>\n      <div style="clear:both"></div>\n    </div>\n    ';
   },
   initialize: function initialize(o) {
     this.options = o;

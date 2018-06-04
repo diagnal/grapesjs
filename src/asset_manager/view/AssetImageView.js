@@ -9,8 +9,10 @@ module.exports = require('./AssetView').extend({
     const pfx = this.pfx;
     const src = this.model.get('src');
     return `
-      <div class="${pfx}preview" style="background-image: url('${src}');"></div>
-      <div class="${pfx}preview-bg ${this.ppfx}checker-bg"></div>
+        <div id="${pfx}preview" class="${pfx}preview" style="background-image: url(${src});"></div>
+        <div id="${pfx}preview-bg" class="${pfx}preview-bg ${
+      this.ppfx
+    }checker-bg"></div>
     `;
   },
 
@@ -24,8 +26,8 @@ module.exports = require('./AssetView').extend({
     let dim = width && height ? `${width}x${height}${unit}` : '';
     name = name || model.getFilename();
     return `
-      <div class="${pfx}name">${name}</div>
-      <div class="${pfx}dimensions">${dim}</div>
+        <div id="${pfx}name" class="${pfx}name">${name}</div>
+        <div id="${pfx}dimensions" class="${pfx}dimensions">${dim}</div>
     `;
   },
 
@@ -39,15 +41,26 @@ module.exports = require('./AssetView').extend({
    * @private
    * */
   onClick() {
-    var onClick = this.config.onClick;
     var model = this.model;
+    //Show image in preview on click
+    $('#mediaPreview').attr('src', model.get('src'));
+    $(`#${this.pfx}title`).css('display', 'none');
+    //Show image dimensions
+    var img = new Image();
+    img.onload = function() {
+      $('#imgMeta').html(
+        'Height: <b>' + img.height + 'px</b> Width: <b>' + img.width + 'px</b>'
+      );
+    };
+    img.src = model.get('src');
+    var onClick = this.config.onClick;
     this.collection.trigger('deselectAll');
     this.$el.addClass(this.pfx + 'highlight');
 
     if (typeof onClick === 'function') {
       onClick(model);
     } else {
-      this.updateTarget(this.collection.target);
+      this.updateTarget(model.get('src'));
     }
   },
 
